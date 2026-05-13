@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from "react"
 
-const SITE_URL  = "https://examnova-v1.vercel.app/"
+const SITE_URL  = "https://examnova.vercel.app"
 const SITE_NAME = "ExamNova"
 
 // ── Helpers ──────────────────────────────────
