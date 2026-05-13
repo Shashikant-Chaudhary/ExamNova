@@ -6,7 +6,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { generateCurrentAffairsQuestions } from '../services/aiService'
 import { saveTestResult, saveMockResult, getMockHistory, getMockResultWithQuestions } from '../services/storageService'
-import { getAvailableMockPapers, getMockPaperById, incrementAttemptCount, cacheCASectionInPaper, generateRandomMixPaper, checkAndGenerateMockPaper } from '../services/tempService.js'
+import { getAvailableMockPapers, getMockPaperById, incrementAttemptCount, cacheCASectionInPaper, generateRandomMixPaper, checkAndGenerateMockPaper } from '../services/MockPaperService.js'
 import { addMockPoints }    from '../services/leaderboardService'
 import MOCK_CONFIG          from '../data/mockConfig'
 import CUTOFFS              from '../data/cutoffs'
