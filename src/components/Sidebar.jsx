@@ -208,7 +208,7 @@ export default function Sidebar({
                 const shareData = {
                   title: 'ExamNova — Government Exam Prep',
                   text: 'Prepare for SSC, Railway, Banking & UPSC with AI-powered questions, mock tests and current affairs — 100% Free!',
-                  url: 'https://examnova.co.in',
+                  url: 'https://examnova-v1.vercel.app/',
                 }
                 if (navigator.share) {
                   navigator.share(shareData).catch(() => {})
