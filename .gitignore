@@ -1,0 +1,31 @@
+# ── Environment variables — NEVER commit these ──
+.env
+.env.local
+.env.production
+.env.development
+
+# ── Dependencies ──
+node_modules/
+
+# ── Build output ──
+dist/
+build/
+
+# ── Vite ──
+*.local
+
+# ── OS files ──
+.DS_Store
+Thumbs.db
+
+# ── Logs ──
+*.log
+npm-debug.log*
+
+# ── Editor ──
+.vscode/
+.idea/
+
+# ── Firebase ──
+.firebase/
+serviceAccount.json

@@ -1,0 +1,24 @@
+{
+  "name": "ExamNova — Government Exam Prep",
+  "short_name": "ExamNova",
+  "description": "AI-powered preparation for SSC, Railway, Banking & UPSC exams",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f1f3d",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow all reads and writes for now (development/testing)
+    // TODO: Restrict these rules in production
+    match /{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Specific collection rules (more restrictive for production)
+    match /caBank/{document=**} {
+      allow read: if true;
+      allow write: if true;  // Allow caching of generated CA questions
+    }
+
+    match /feedback/{feedbackId} {
+      allow read: if true;
+      allow create: if true;  // Allow submitting feedback
+      allow update: if true;
+    }
+
+    match /reports/{reportId} {
+      allow read: if true;
+      allow create: if true;  // Allow reporting questions
+      allow update: if true;
+    }
+
+    match /questionBank/{document=**} {
+      allow read: if true;
+      allow write: if true;  // Allow caching generated questions
+    }
+
+    match /leaderboard/{exam}/{users=**} {
+      allow read: if true;
+      allow write: if true;  // Allow updating user scores
+    }
+
+    // ── CA (Current Affairs) Bank — cache for generated questions ──
+    match /caBank/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
