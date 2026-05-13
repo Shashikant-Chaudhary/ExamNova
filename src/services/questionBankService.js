@@ -96,7 +96,7 @@ async function saveToBank(exam, topic, level, newQuestions, language = 'english'
     // Only for english questions (mock papers use english bank)
     // Runs silently in background — never blocks the student
     if (language === 'english' && !year) {
-      import('./MockPaperService.js').then(({ checkAndGenerateMockPaper }) => {
+      import('./tempService.js').then(({ checkAndGenerateMockPaper }) => {
         checkAndGenerateMockPaper(exam, level).catch(() => {})
       }).catch(() => {})
     }
