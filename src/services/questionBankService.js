@@ -27,10 +27,29 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 const activeSilentFills = new Set()
 
 
+// ── LANGUAGE-SPECIFIC TOPICS ──────────────────
+// These subjects always have the same questions regardless of
+// the language filter (english/hindi). English Language questions
+// are always in English, Hindi questions are always in Hindi.
+// So both same+eng and same+hindi share ONE pool for these topics.
+const LANGUAGE_FIXED_TOPICS = [
+  'english language', 'english', 'general english',
+  'hindi', 'हिंदी', 'hindi language',
+]
+
+function isLanguageFixedTopic(topic = '') {
+  return LANGUAGE_FIXED_TOPICS.includes(topic.toLowerCase().trim())
+}
+
+
 // ── GET BANK KEY ───────────────────────────────────────────────────────────
 function bankKey(exam, topic, level, language = 'english', year = '') {
+  // For language-specific subjects (English Language / Hindi),
+  // ignore the language filter — both hindi and english combos
+  // share the same question pool for that level.
+  const langPart = isLanguageFixedTopic(topic) ? 'shared' : language
   const yearPart = year ? `__${year}` : ''
-  return `${exam}__${topic}__${level}__${language}${yearPart}`
+  return `${exam}__${topic}__${level}__${langPart}${yearPart}`
     .replace(/\s+/g, '_')
     .replace(/[^a-zA-Z0-9_]/g, '_')
 }
@@ -38,8 +57,9 @@ function bankKey(exam, topic, level, language = 'english', year = '') {
 
 // ── GET USER SEEN KEY ──────────────────────────
 function seenKey(exam, topic, level, language = 'english', year = '') {
+  const langPart = isLanguageFixedTopic(topic) ? 'shared' : language
   const yearPart = year ? `__${year}` : ''
-  return `${exam}__${topic}__${level}__${language}${yearPart}`
+  return `${exam}__${topic}__${level}__${langPart}${yearPart}`
     .replace(/\s+/g, '_')
     .replace(/[^a-zA-Z0-9_]/g, '_')
 }
