@@ -153,10 +153,11 @@ const toggleTopic = (topicId) => {
                 <div style={styles.examPickerGrid}>
                   {[
                     { group: '🚂 Railway',  exams: ['RRB NTPC', 'RRB Group D', 'RRB ALP'] },
-                    { group: '📋 SSC',      exams: ['SSC CGL', 'SSC CHSL', 'SSC MTS', 'SSC GD'] },
-                    { group: '🏦 Banking',  exams: ['IBPS PO', 'IBPS Clerk', 'SBI PO', 'SBI Clerk'] },
+                    { group: '📋 SSC',      exams: ['SSC CGL', 'SSC CHSL', 'SSC MTS', 'SSC GD', 'SSC JE', 'SSC Stenographer'] },
+                    { group: '🏦 Banking',  exams: ['IBPS PO', 'IBPS Clerk', 'SBI PO', 'SBI Clerk', 'RBI Grade B', 'RBI Assistant', 'LIC AAO'] },
                     { group: '🎯 UPSC',     exams: ['UPSC Prelims', 'UPSC CDS'] },
-                    { group: '🏛️ State',    exams: ['State PSC'] },
+                    { group: '🎖️ Defence',  exams: ['NDA', 'AFCAT'] },
+                    { group: '🏛️ State',    exams: ['State PSC', 'Delhi Police Constable'] },
                   ].map(group => (
                     <div key={group.group} style={{ marginBottom: '12px' }}>
                       <div style={styles.examGroupLabel}>{group.group}</div>

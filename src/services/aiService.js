@@ -132,7 +132,7 @@ GOAL: Student who practices these questions should feel fully prepared
 for the upcoming ${exam} exam with zero surprises.
 ` : `
 DIFFICULTY — HARDER THAN CURRENT YEAR EXAM:
-- Make questions NOTICEABLY harder than actual ${exam} exam
+- Make questions NOTICEABLY much harder than actual ${exam} exam
 - Take the same topics but increase complexity:
   * Math: add extra steps, combine 2 concepts in one question
   * Reasoning: add more variables, longer puzzles, more conditions

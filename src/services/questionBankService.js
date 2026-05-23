@@ -32,9 +32,16 @@ const activeSilentFills = new Set()
 // the language filter (english/hindi). English Language questions
 // are always in English, Hindi questions are always in Hindi.
 // So both same+eng and same+hindi share ONE pool for these topics.
+// Topic names match exactly what is defined in exams.js
 const LANGUAGE_FIXED_TOPICS = [
-  'english language', 'english', 'general english',
-  'hindi', 'हिंदी', 'hindi language',
+  // English language subjects (all exams)
+  'English Language',                    // SSC CGL, SSC CHSL, SSC GD, IBPS PO, IBPS Clerk, RBI Assistant, LIC AAO
+  'English Language & Comprehension',    // SSC Stenographer
+  'General English',                     // RRB NTPC, RRB Group D, RRB ALP, SSC MTS, SBI Clerk
+  'English',                             // RBI Grade B, UPSC CDS, NDA, Delhi Police Constable
+  'Verbal Ability in English',           // AFCAT
+  // Hindi language subjects (all exams)
+  'Hindi',                               // RRB NTPC, RRB Group D, RRB ALP, SSC MTS, SSC GD, State PSC
 ]
 
 function isLanguageFixedTopic(topic = '') {
@@ -113,9 +120,9 @@ async function saveToBank(exam, topic, level, newQuestions, language = 'english'
     console.log(`✅ Bank saved: ${newQuestions.length} questions for ${exam} ${topic} ${level}`)
 
     // ── AUTO-TRIGGER MOCK PAPER CHECK ──
-    // Only for english questions (mock papers use english bank)
+    // For english questions OR language-fixed topics (English Language / Hindi)
     // Runs silently in background — never blocks the student
-    if (language === 'english' && !year) {
+    if ((language === 'english' || isLanguageFixedTopic(topic)) && !year) {
       import('./MockPaperService.js').then(({ checkAndGenerateMockPaper }) => {
         checkAndGenerateMockPaper(exam, level).catch(() => {})
       }).catch(() => {})

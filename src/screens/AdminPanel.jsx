@@ -327,7 +327,7 @@ const [openReports,    setOpenReports]    = useState(0)
     try {
       const questions = await generateForBank({
         exam: selectedExam, topic: selectedTopic,
-        subtopics: [], level: selectedLevel, language: selectedLanguage, count: 20,
+        subtopics: [], level: selectedLevel, language: selectedLanguage, count: 26,
       })
       const result = await saveToBank(questions)
       setGenStatus(`✅ Added ${result.added} questions! Bank now has ${result.total} questions.${result.duplicates > 0 ? ` (${result.duplicates} duplicates skipped)` : ''}`)
@@ -716,7 +716,7 @@ const [openReports,    setOpenReports]    = useState(0)
                 onClick={handleGenerate} disabled={generating}>
                 {generating
                   ? <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div className="spinner" style={{ width: '16px', height: '16px' }} />Generating...</span>
-                  : '🤖 Generate 20 Questions'}
+                  : '🤖 Generate 26 Questions'}
               </button>
               {genStatus && <div style={statusStyle(genStatus)}>{genStatus}</div>}
             </div>

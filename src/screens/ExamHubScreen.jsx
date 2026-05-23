@@ -27,7 +27,15 @@ const EXAM_META = {
   'SBI Clerk':    { icon: '🏦', color: '#22c55e', bg: 'rgba(34,197,94,.08)'   },
   'UPSC Prelims': { icon: '🎯', color: '#a855f7', bg: 'rgba(168,85,247,.08)'  },
   'UPSC CDS':     { icon: '🎯', color: '#a855f7', bg: 'rgba(168,85,247,.08)'  },
-  'State PSC':    { icon: '🏛️', color: '#eab308', bg: 'rgba(234,179,8,.08)'   },
+  'State PSC':              { icon: '🏛️', color: '#eab308', bg: 'rgba(234,179,8,.08)'   },
+  'Delhi Police Constable': { icon: '🚔', color: '#eab308', bg: 'rgba(234,179,8,.08)'   },
+  'SSC JE':                 { icon: '⚙️', color: '#f97316', bg: 'rgba(249,115,22,.08)'  },
+  'SSC Stenographer':       { icon: '📋', color: '#f97316', bg: 'rgba(249,115,22,.08)'  },
+  'RBI Grade B':            { icon: '🏦', color: '#22c55e', bg: 'rgba(34,197,94,.08)'   },
+  'RBI Assistant':          { icon: '🏦', color: '#22c55e', bg: 'rgba(34,197,94,.08)'   },
+  'LIC AAO':                { icon: '🏦', color: '#22c55e', bg: 'rgba(34,197,94,.08)'   },
+  'NDA':                    { icon: '🎖️', color: '#6366f1', bg: 'rgba(99,102,241,.08)'  },
+  'AFCAT':                  { icon: '✈️', color: '#6366f1', bg: 'rgba(99,102,241,.08)'  },
 }
 
 export default function ExamHubScreen({
