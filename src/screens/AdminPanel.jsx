@@ -710,7 +710,7 @@ const [openReports,    setOpenReports]    = useState(0)
           {activeTab === 'generate' && (
             <div>
               <p style={{ color: 'var(--muted2)', fontSize: '14px', marginBottom: '20px', lineHeight: '1.6' }}>
-                AI will generate <strong>20 questions</strong> for <strong>{selectedExam} — {selectedTopic}</strong> at <strong>{selectedLevel}</strong> level.
+                AI will generate <strong>26 questions</strong> for <strong>{selectedExam} — {selectedTopic}</strong> at <strong>{selectedLevel}</strong> level.
               </p>
               <button className="btn btn-primary" style={{ padding: '12px 32px', fontSize: '15px', opacity: generating ? 0.7 : 1 }}
                 onClick={handleGenerate} disabled={generating}>

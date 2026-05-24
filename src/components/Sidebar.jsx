@@ -205,19 +205,26 @@ export default function Sidebar({
             {/* ── Share icon (replaces profile) ── */}
             <button
               onClick={() => {
-                const shareData = {
-                  title: 'ExamNova — Government Exam Prep',
-                  text: 'Prepare for SSC, Railway, Banking & UPSC with AI-powered questions, mock tests and current affairs — 100% Free!',
-                  url: 'https://examnova-v1.vercel.app/',
-                }
+                const text = `Exam आने वाला है — अभी से तैयारी शुरू करो! 🎯
+
+ExamNova पर मिलेगा:
+🤖 AI-Powered Practice Questions — हर Topic के लिए
+📝 Full-Length Mock Tests — Real Exam Pattern
+📰 Daily Current Affairs — Live News + AI MCQs
+📊 Performance Dashboard — Weak Topics Track करो
+🏆 All-India Leaderboard — अपनी Rank जानो
+📄 Shift-wise Previous Year Papers
+
+SSC • Railway • Banking • UPSC — सब एक App में, 100% Free.
+
+👇 अभी Download करो: https://examnova-v1.vercel.app`
                 if (navigator.share) {
-                  navigator.share(shareData).catch(() => {})
+                  navigator.share({ title: 'ExamNova — Free Govt Exam Prep', text }).catch(() => {})
                 } else {
-                  // Fallback — copy link to clipboard
-                  navigator.clipboard?.writeText(shareData.url).then(() => {
+                  navigator.clipboard?.writeText(text).then(() => {
                     alert('Link copied to clipboard!')
                   }).catch(() => {
-                    window.open(`https://wa.me/?text=${encodeURIComponent(shareData.text + ' ' + shareData.url)}`, '_blank')
+                    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
                   })
                 }
               }}
