@@ -151,6 +151,7 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
   const [showPalette,      setShowPalette]      = useState(false)
   const [timeLeft,         setTimeLeft]         = useState(0)
   const [submitted,        setSubmitted]        = useState(false)
+  const [showSubmitModal,  setShowSubmitModal]  = useState(false)
   const [pointsResult,     setPointsResult]     = useState(null)
 
   // ── History state ──
@@ -345,10 +346,6 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
   // ── Submit ──
   const handleSubmit = async (autoSubmit = false) => {
     if (submitted) return
-    if (!autoSubmit) {
-      const unanswered = testQuestions.length - Object.keys(answers).length
-      if (unanswered > 0 && !window.confirm(`${unanswered} questions unattempted. Submit anyway?`)) return
-    }
     clearInterval(timerRef.current)
     setSubmitted(true)
 
@@ -1381,7 +1378,7 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
         </div>
 
         {/* Submit */}
-        <button onClick={() => { if (window.confirm(`Submit exam?\n${testQuestions.length - answered} questions unattempted.`)) handleSubmit(false) }}
+        <button onClick={() => setShowSubmitModal(true)}
           style={{ padding: '7px clamp(8px,2vw,14px)', borderRadius: 9, background: 'rgba(239,68,68,.8)', border: '1.5px solid rgba(239,68,68,.5)', color: 'white', fontSize: 12, fontWeight: 800, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
           Submit ✓
         </button>
@@ -1562,7 +1559,7 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
 
         {/* Next / Submit */}
         {currentQ === testQuestions.length - 1 ? (
-          <button onClick={() => { if (window.confirm(`Submit exam?\n${testQuestions.length - answered} unattempted.`)) handleSubmit(false) }}
+          <button onClick={() => setShowSubmitModal(true)}
             style={{ padding: '10px 20px', borderRadius: 10, background: 'linear-gradient(135deg, #ef4444, #dc2626)', border: 'none', color: 'white', fontSize: 13, fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 12px rgba(239,68,68,.3)', minWidth: 100 }}>
             Submit ✓
           </button>
@@ -1641,6 +1638,53 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
           </div>
         </div>
       )}
+
+      {/* —— Submit Confirmation Modal —— */}
+      {showSubmitModal && (() => {
+        const total       = testQuestions.length
+        const attempted   = Object.keys(answers).length
+        const unattempted = total - attempted
+        const markedCount = Object.keys(marked).length
+        return (
+          <div onClick={() => setShowSubmitModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px' }}>
+            <div onClick={e => e.stopPropagation()} style={{ background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 16, padding: '28px 24px', maxWidth: 380, width: '100%', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+              <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(249,115,22,0.15)', border: '2px solid rgba(249,115,22,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, margin: '0 auto 12px' }}>📝</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>Submit Exam?</div>
+                <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>This action cannot be undone</div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 22 }}>
+                <div style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)', borderRadius: 10, padding: '10px 8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: 22, fontWeight: 900, color: '#22c55e' }}>{attempted}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>ATTEMPTED</div>
+                </div>
+                <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 10, padding: '10px 8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: 22, fontWeight: 900, color: '#ef4444' }}>{unattempted}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>SKIPPED</div>
+                </div>
+                <div style={{ background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.25)', borderRadius: 10, padding: '10px 8px', textAlign: 'center' }}>
+                  <div style={{ fontSize: 22, fontWeight: 900, color: '#f97316' }}>{markedCount}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)', fontWeight: 600, marginTop: 2 }}>MARKED</div>
+                </div>
+              </div>
+              {unattempted > 0 && (
+                <div style={{ background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.3)', borderRadius: 10, padding: '10px 14px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: 18 }}>⚠️</span>
+                  <span style={{ fontSize: 12, color: '#ca8a04', fontWeight: 600 }}>{unattempted} question{unattempted > 1 ? 's' : ''} still unattempted. You can go back and attempt them.</span>
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button onClick={() => setShowSubmitModal(false)} style={{ flex: 1, padding: '12px', borderRadius: 10, background: 'var(--surface2)', border: '1.5px solid var(--border)', color: 'var(--text)', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+                  ← Go Back
+                </button>
+                <button onClick={() => { setShowSubmitModal(false); handleSubmit(false) }} style={{ flex: 1, padding: '12px', borderRadius: 10, background: 'linear-gradient(135deg, #ef4444, #dc2626)', border: 'none', color: 'white', fontSize: 14, fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 12px rgba(239,68,68,0.35)' }}>
+                  Submit ✓
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }

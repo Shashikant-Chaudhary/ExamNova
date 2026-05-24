@@ -326,6 +326,7 @@ export default function App() {
         if (firebaseUser) updateSessionTime()
         setUser(firebaseUser)
       }
+      window.__hideSplash?.()
     })
     return () => unsubscribe()
   }, [])
@@ -499,14 +500,8 @@ useEffect(() => {
     window.scrollTo(0, 0)
   }
 
-  // ── Auth loading ──
-  if (user === undefined) {
-    return (
-      <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--bg)' }}>
-        <div className="spinner" />
-      </div>
-    )
-  }
+  // ── Auth loading — keep HTML splash visible, return nothing ──
+  if (user === undefined) return null
 
   // ── Not logged in ──
   if (!user) {
