@@ -217,8 +217,19 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
           return t - 1
         })
       }, 1000)
+      // Enter fullscreen when test begins
+      const el = document.documentElement
+      if (el.requestFullscreen)             el.requestFullscreen().catch(() => {})
+      else if (el.webkitRequestFullscreen)  el.webkitRequestFullscreen()
     }
-    return () => clearInterval(timerRef.current)
+    return () => {
+      clearInterval(timerRef.current)
+      // Exit fullscreen when leaving test phase
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen)            document.exitFullscreen().catch(() => {})
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
+      }
+    }
   }, [phase])
 
   // ── Active sections ──
@@ -347,6 +358,11 @@ export default function MockTestScreen({ user, navigate, selectedExam, onLogout,
   const handleSubmit = async (autoSubmit = false) => {
     if (submitted) return
     clearInterval(timerRef.current)
+    // Exit fullscreen on submit
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen)            document.exitFullscreen().catch(() => {})
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
+    }
     setSubmitted(true)
 
     const score         = calcScore()
