@@ -4,7 +4,7 @@ import { db } from './firebase'
 const CA_CACHE_DAYS = 30  // refresh cache after 30 days
 
 function caKey(exam, topic, year, language = 'english') {
-  return `CA__${exam}__${topic}__${year}__${language}`
+  return `CA__${topic}__${year}__${language}`
     .replace(/\s+/g, '_')
     .replace(/[^a-zA-Z0-9_]/g, '_')
 }
@@ -33,7 +33,7 @@ export async function saveCABank(exam, topic, year, questions, language = 'engli
     if (snap.exists()) {
       await updateDoc(ref, { questions, count: questions.length, updatedAt: now })
     } else {
-      await setDoc(ref, { exam, topic, year, questions, count: questions.length, createdAt: now, updatedAt: now })
+      await setDoc(ref, { topic, year, questions, count: questions.length, createdAt: now, updatedAt: now })
     }
     console.log(`✅ CA bank saved: ${questions.length} questions`)
   } catch (e) {

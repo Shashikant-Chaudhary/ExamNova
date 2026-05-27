@@ -1260,14 +1260,6 @@ function CABankSection() {
     'Art & Culture',
   ]
   const CA_YEARS = ['2025 2026', '2024 2025', '2023 2024', '2022 2023']
-  const CA_EXAMS = [
-    'SSC CGL', 'SSC CHSL', 'SSC MTS', 'SSC GD',
-    'RRB NTPC', 'RRB Group D', 'RRB ALP',
-    'IBPS PO', 'IBPS Clerk', 'SBI PO', 'SBI Clerk',
-    'UPSC Prelims', 'UPSC CDS', 'State PSC',
-  ]
-
-  const [exam,     setExam]     = useState('SSC CGL')
   const [language, setLanguage] = useState('english')
   const [topic,    setTopic]    = useState(CA_TOPICS[0])
   const [year,     setYear]     = useState(CA_YEARS[0])
@@ -1279,7 +1271,7 @@ function CABankSection() {
   const checkBank = async () => {
     setChecking(true)
     try {
-      const cached = await loadCABank(exam, topic, year, language)
+      const cached = await loadCABank(null, topic, year, language)
       setCount(cached.length)
     } catch (e) {
       setCount(0)
@@ -1291,16 +1283,16 @@ function CABankSection() {
     setCount(null)
     setStatus('')
     checkBank()
-  }, [exam, topic, year, language])
+  }, [topic, year, language])
 
   const handleGenerate = async () => {
     setLoading(true)
     setStatus('🤖 Generating CA questions...')
     try {
       const qs = await generateCurrentAffairsQuestions({
-      exam, topic, year, count: 15, language,
-  })
-await saveCABank(exam, topic, year, qs, language)
+        topic, year, count: 15, language,
+      })
+      await saveCABank(null, topic, year, qs, language)
       setStatus(`✅ Saved ${qs.length} questions to cache`)
       setCount(qs.length)
     } catch (e) {
@@ -1326,13 +1318,6 @@ await saveCABank(exam, topic, year, qs, language)
 
       {/* Selectors */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
-        <div>
-          <label style={{ fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '5px', display: 'block' }}>Exam</label>
-          <select style={{ width: '100%', padding: '10px 12px', background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)', fontSize: '13px' }}
-            value={exam} onChange={e => setExam(e.target.value)}>
-            {CA_EXAMS.map(e => <option key={e} value={e}>{e}</option>)}
-          </select>
-        </div>
         <div>
           <label style={{ fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '5px', display: 'block' }}>Topic</label>
           <select style={{ width: '100%', padding: '10px 12px', background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)', fontSize: '13px' }}
